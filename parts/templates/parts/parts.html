@@ -1,0 +1,22 @@
+{% extends "parts/base.html" %}
+{% block content %}
+    <h1>Spare Parts List</h1>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Part</th>
+                <th>Location</th>
+                <th>Number in Stock</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for part in parts %}
+                <tr>
+                    <td>{{ part.code }} - {{ part.name }}</td>
+                    <td>{{ part.location }}</td>
+                    <td>{{ part.num_in_stock }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock content %}
