@@ -1,6 +1,17 @@
 {% extends "parts/base.html" %}
 {% block content %}
     <h1>Spare Parts List</h1>
+
+    <form method="get" class="mb-3">
+        <!--Search bar-->
+        <input type="text" name="searchVal" class="form-control" placeholder="Search by code or name" value="{{ search_value }}">
+        <!--Search button-->
+        <button type="submit" class="btn btn-primary mt-2">Search</button>
+        <!--Button to clear search-->
+        <a href="{% url 'parts-list' %}" class="btn btn-secondary mt-2">Clear</a>
+    </form>
+
+    <!--Table showing list of parts-->
     <table class="table">
         <thead>
             <tr>
@@ -10,13 +21,21 @@
             </tr>
         </thead>
         <tbody>
-            {% for part in parts %}
+            {% if parts %}
+                <!--If parts found, list details-->
+                {% for part in parts %}
+                    <tr>
+                        <td>{{ part.code }} - {{ part.name }}</td>
+                        <td>{{ part.location }}</td>
+                        <td>{{ part.num_in_stock }}</td>
+                    </tr>
+                {% endfor %}
+            {% else %}
+                <!--If no parts found, show not found message-->
                 <tr>
-                    <td>{{ part.code }} - {{ part.name }}</td>
-                    <td>{{ part.location }}</td>
-                    <td>{{ part.num_in_stock }}</td>
+                    <td colspan="3">No parts found...</td>
                 </tr>
-            {% endfor %}
+            {% endif %}
         </tbody>
     </table>
 {% endblock content %}
