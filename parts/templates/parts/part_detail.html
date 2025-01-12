@@ -1,0 +1,22 @@
+{% extends "parts/base.html" %}
+{% block content %}
+
+    <!--Table showing part details-->
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Part Code</th>
+                <th>Part Name</th>
+                <th>Location</th>
+                <th>In Stock</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{part.code}}</td>
+                <td>{{ part.name }}</td>
+                <td>{{ part.location }}</td>
+                <td>{{ part.num_in_stock }}</td>
+            </tr>
+        </tbody>
+{% endblock content %}

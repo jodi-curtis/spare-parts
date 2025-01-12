@@ -25,7 +25,7 @@
                 <!--If parts found, list details-->
                 {% for part in parts %}
                     <tr>
-                        <td>{{ part.code }} - {{ part.name }}</td>
+                        <td><a href="{% url 'part-detail' part.id %}">{{ part.code }} - {{ part.name }}</a></td>
                         <td>{{ part.location }}</td>
                         <td>{{ part.num_in_stock }}</td>
                     </tr>
