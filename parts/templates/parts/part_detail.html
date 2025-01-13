@@ -19,4 +19,38 @@
                 <td>{{ part.num_in_stock }}</td>
             </tr>
         </tbody>
+    </table>
+
+    <form method="post">
+        {% csrf_token %}
+        <div class="form-group d-flex align-items-center">
+            <button type="button" class="btn btn-secondary" id="minus-btn">-</button>
+            <input type="number" id="stock_input" name="receipt_quantity" class="form-control mx-2" value="0" readonly required>
+            <button type="button" class="btn btn-secondary" id="plus-btn">+</button>
+        </div>
+        <button type="submit" class="btn btn-primary mt-2">Update Stock</button>
+    </form>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const receiptStockValue = document.getElementById('stock_input');
+            const minusBtn = document.getElementById('minus-btn');
+            const plusBtn = document.getElementById('plus-btn');
+
+            // On click Minus button, if value is above 0, subtract 1
+            minusBtn.addEventListener('click', function () {
+                let currentValue = parseInt(receiptStockValue.value, 10) || 0;
+                if (currentValue > 0) {
+                    receiptStockValue.value = currentValue - 1;
+                }
+            });
+
+            // On click Plus button, add 1 to value
+            plusBtn.addEventListener('click', function () {
+                let currentValue = parseInt(receiptStockValue.value, 10) || 0;
+                receiptStockValue.value = currentValue + 1;
+            });
+        });
+    </script>
 {% endblock content %}

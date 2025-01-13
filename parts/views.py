@@ -1,9 +1,10 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from . models import Part
 from django.views.generic import ListView, DetailView
 from django.db.models import Q
+from django.contrib import messages
 
 # Create your views here.
 @login_required
@@ -34,3 +35,16 @@ class PartListView(ListView):
     
 class PartDetailView(DetailView):
     model = Part
+
+    def post(self, request, *args, **kwargs):
+        current_part = self.get_object()
+
+        if 'receipt_quantity' in request.POST:
+            # Get receipt quantity from form, if not set, set as 0
+            quantity = int(request.POST.get('receipt_quantity', 0))
+            # Add quantity to parts stock
+            current_part.num_in_stock += quantity
+            current_part.save()
+            messages.success(request, f"Stock updated successfully!")
+
+        return redirect('part-detail', pk=current_part.pk)
