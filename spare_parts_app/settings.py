@@ -33,6 +33,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'parts.apps.PartsConfig',
     'users.apps.UsersConfig',
+    'basket.apps.BasketConfig',
     'crispy_forms',
     'crispy_bootstrap5',
     'django.contrib.admin',

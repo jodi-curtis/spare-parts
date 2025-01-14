@@ -1,0 +1,34 @@
+{% extends "parts/base.html" %}
+{% block content %}
+    <h1>Your Basket</h1>
+
+    {% if basket.items.exists %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Part</th>
+                    <th>Quantity</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in basket.items.all %}
+                <tr>
+                    <td>{{ item.part.name }}</td>
+                    <td>{{ item.quantity }}</td>
+                    <td>
+                        <form method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="remove_item_id" value="{{ item.id }}">
+                            <button type="submit">Remove</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <a href="" class="btn btn-primary">Submit Order</a>
+    {% else %}
+        <p>Your basket is empty.</p>
+    {% endif %}
+{% endblock %}
