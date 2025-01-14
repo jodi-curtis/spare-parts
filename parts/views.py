@@ -48,3 +48,14 @@ class PartDetailView(DetailView):
             messages.success(request, f"Stock updated successfully!")
 
         return redirect('part-detail', pk=current_part.pk)
+    
+
+class LowStockListView(ListView):
+    model = Part
+    context_object_name = 'parts'
+    template_name = 'parts/low_stock.html'
+
+    def get_queryset(self):
+        all_parts = Part.objects.all()
+        low_stock_parts = [part for part in all_parts if part.is_low_stock()]
+        return low_stock_parts

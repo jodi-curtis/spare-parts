@@ -1,0 +1,32 @@
+{% extends "parts/base.html" %}
+{% block content %}
+    <h1>Low Stock</h1>
+
+    <!--Table showing list of parts-->
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Part</th>
+                <th>Location</th>
+                <th>Number in Stock</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if parts %}
+                <!--If parts found, list details-->
+                {% for part in parts %}
+                    <tr>
+                        <td><a href="{% url 'part-detail' part.id %}">{{ part.code }} - {{ part.name }}</a></td>
+                        <td>{{ part.location }}</td>
+                        <td>{{ part.num_in_stock }}</td>
+                    </tr>
+                {% endfor %}
+            {% else %}
+                <!--If no parts found, show not found message-->
+                <tr>
+                    <td colspan="3">No parts found...</td>
+                </tr>
+            {% endif %}
+        </tbody>
+    </table>
+{% endblock content %}

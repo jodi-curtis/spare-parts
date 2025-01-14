@@ -33,6 +33,10 @@
                             <a class="nav-link fs-5" href="{% url 'parts-list' %}">Parts</a>
                         </li>
 
+                        <li class="nav-item mx-3">
+                            <a class="nav-link fs-5" href="{% url 'low-stock' %}">Low Stock</a>
+                        </li>
+
                         <form method="POST" action="{% url 'logout' %}" class="form-inline nav-item d-flex align-items-center">
                             {% csrf_token %}
                             <button type="submit" class="btn btn-logout nav-link btn-light text-dark mx-2">
