@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect
 from django.views.generic import DetailView
 from . models import Basket, BasketItem
+from django.contrib import messages
+
 
 # Create your views here.
 class BasketDetailView(DetailView):
@@ -18,8 +20,13 @@ class BasketDetailView(DetailView):
 
         # Handle remove action
         if 'remove_item_id' in request.POST:
+            # Get item id
             item_id = request.POST.get('remove_item_id')
+            # Get item from users basket
             item = BasketItem.objects.get(id=item_id, basket=basket)
+            # Delete Item from users basket
             item.delete()
+            messages.success(request, f"{item.part.name} removed from basket")
 
-        return redirect('basket')  # Redirect to refresh the basket page
+        # Redirect to page to refresh basket
+        return redirect('basket-home')
