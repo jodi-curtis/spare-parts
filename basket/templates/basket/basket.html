@@ -27,7 +27,16 @@
                 {% endfor %}
             </tbody>
         </table>
-        <a href="" class="btn btn-primary">Submit Order</a>
+        <form method="post" >
+            {% csrf_token %}
+            <label for="collection_datetime">Select Collection Date and Time:</label>
+            <input 
+                type="datetime-local" 
+                id="collection_datetime" 
+                name="collection_datetime" 
+                required>
+            <button type="submit" class="btn btn-primary">Submit Order</button>
+        </form>
     {% else %}
         <p>Your basket is empty.</p>
     {% endif %}
