@@ -21,25 +21,40 @@
         </tbody>
     </table>
 
+    <!--Form to receipt into stock-->
     <form method="post">
         {% csrf_token %}
         <div class="form-group d-flex align-items-center">
-            <button type="button" class="btn btn-secondary" id="minus-btn">-</button>
+            <button type="button" class="btn btn-secondary" id="minus-btn-receipt">-</button>
             <input type="number" id="stock_input" name="receipt_quantity" class="form-control mx-2" value="0" readonly required>
-            <button type="button" class="btn btn-secondary" id="plus-btn">+</button>
+            <button type="button" class="btn btn-secondary" id="plus-btn-receipt">+</button>
         </div>
         <button type="submit" class="btn btn-primary mt-2">Update Stock</button>
+    </form>
+
+    <!--Form to add to order-->
+    <form method="post">
+        {% csrf_token %}
+        <div class="form-group d-flex align-items-center">
+            <button type="button" class="btn btn-secondary" id="minus-btn-order">-</button>
+            <input type="number" id="order_input" name="order_quantity" class="form-control mx-2" value="0" readonly required>
+            <button type="button" class="btn btn-secondary" id="plus-btn-order">+</button>
+        </div>
+        <button type="submit" class="btn btn-primary mt-2">Add to Order</button>
     </form>
 
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const receiptStockValue = document.getElementById('stock_input');
-            const minusBtn = document.getElementById('minus-btn');
-            const plusBtn = document.getElementById('plus-btn');
+            const minusBtnReceipt = document.getElementById('minus-btn-receipt');
+            const plusBtnReceipt = document.getElementById('plus-btn-receipt');
+            const orderValue = document.getElementById('order_input');
+            const minusBtnOrder = document.getElementById('minus-btn-order');
+            const plusBtnOrder = document.getElementById('plus-btn-order');
 
             // On click Minus button, if value is above 0, subtract 1
-            minusBtn.addEventListener('click', function () {
+            minusBtnReceipt.addEventListener('click', function () {
                 let currentValue = parseInt(receiptStockValue.value, 10) || 0;
                 if (currentValue > 0) {
                     receiptStockValue.value = currentValue - 1;
@@ -47,10 +62,26 @@
             });
 
             // On click Plus button, add 1 to value
-            plusBtn.addEventListener('click', function () {
+            plusBtnReceipt.addEventListener('click', function () {
                 let currentValue = parseInt(receiptStockValue.value, 10) || 0;
                 receiptStockValue.value = currentValue + 1;
             });
+
+
+            // On click Minus button, if value is above 0, subtract 1
+            minusBtnOrder.addEventListener('click', function () {
+                let currentValue = parseInt(orderValue.value, 10) || 0;
+                if (currentValue > 0) {
+                    orderValue.value = currentValue - 1;
+                }
+            });
+
+            // On click Plus button, add 1 to value
+            plusBtnOrder.addEventListener('click', function () {
+                let currentValue = parseInt(orderValue.value, 10) || 0;
+                orderValue.value = currentValue + 1;
+            });
+
         });
     </script>
 {% endblock content %}
