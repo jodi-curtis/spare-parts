@@ -1,0 +1,60 @@
+{% extends "parts/base.html" %}
+{% block content %}
+    <h1>Orders</h1>
+
+
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+            {% if orders %}
+                <!--If orders found, list details-->
+                {% for order in orders %}
+                <div class="col">
+                    <!-- <div class="card {% if project.is_overdue %}border-danger{% endif %} h-100"> -->
+                    <div class="card h-100">
+                        <div class="card-header text-center">
+                            {{ order.user }}
+                            {% if order.status == 'in_progress' %}
+                            <p>In Progress</p>
+                            {% endif %}
+                        </div>
+                        <div class="card-body">
+                                <!-- {% if project.created_by == user %}
+                                    <span class="badge rounded-circle bg-success text-light" title="Created by you">
+                                        <i class="fas fa-xs fa-star"></i>
+                                    </span>
+                                {% endif %} -->
+
+                            {% if order.items.all %}
+                                {% for item in order.items.all %}
+                                    <div class="row">
+                                        <div class="col-3">
+                                            <span class="bg-success rounded p-1">{{ item.quantity }} x</span>
+                                        </div>
+                                        <div class="col-9">
+                                            <span>{{ item.part.name }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="row text-center pt-2">
+                                        <div class="col-12">
+                                            <span class="bg-warning rounded p-1">{{ item.part.location }}</span>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            {% else %}
+                                <p>No items in this order.</p>
+                            {% endif %}
+                        </div>
+                        <div class="card-footer text-center">
+                            <small> {{ order.collection_datetime }}</small>
+                        </div>
+                    </div>
+                </div>
+
+
+                {% endfor %}
+            {% else %}
+                <!--If no orders found, show not found message-->
+                <p>No orders found..</p>
+            {% endif %}
+        </div>
+
+{% endblock content %}
