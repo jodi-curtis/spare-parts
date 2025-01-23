@@ -12,6 +12,8 @@
     {% endif %}
     <!--Link to stylesheet-->
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <!--Font Awesome Icons-->
+    <script src="https://kit.fontawesome.com/fc6f6498bf.js" crossorigin="anonymous"></script>
 </head>
 <body>
     <!--Menu-->
@@ -45,13 +47,13 @@
                         </li>
 
                         <li class="nav-item mx-3">
-                            <a class="nav-link fs-5" href="{% url 'basket-home' %}">Basket</a>
+                            <a class="nav-link fs-5" href="{% url 'basket-home' %}"><i class="fa-solid fa-basket-shopping"></i></a>
                         </li>
 
                         <form method="POST" action="{% url 'logout' %}" class="form-inline nav-item d-flex align-items-center">
                             {% csrf_token %}
                             <button type="submit" class="btn btn-logout nav-link btn-light text-dark mx-2">
-                                Logout
+                                <i class="fa-solid fa-right-from-bracket"></i>
                             </button>
                         </form>
                     {% else %}

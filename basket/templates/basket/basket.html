@@ -20,7 +20,7 @@
                         <form method="post">
                             {% csrf_token %}
                             <input type="hidden" name="remove_item_id" value="{{ item.id }}">
-                            <button type="submit">Remove</button>
+                            <button class="btn" type="submit"><i class="fa-solid fa-trash-can"></i></button>
                         </form>
                     </td>
                 </tr>
