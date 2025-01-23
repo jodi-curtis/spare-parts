@@ -1,0 +1,25 @@
+.card-hover {
+    position: relative;
+    overflow: hidden;
+}
+
+.card-hover-button {
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+}
+
+.card-hover:hover .card-body,
+.card-hover:hover .card-header,
+.card-hover:hover .card-footer {
+    visibility: hidden;
+    opacity: 0.5;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.card-hover:hover .card-hover-button {
+    display: block;
+}

@@ -9,12 +9,9 @@
                 {% for order in orders %}
                 <div class="col">
                     <!-- <div class="card {% if project.is_overdue %}border-danger{% endif %} h-100"> -->
-                    <div class="card h-100">
+                    <div class="card card-hover h-100 {% if order.status == 'in_progress' %}text-dark bg-light{% elif order.status == 'ready' %}text-light bg-secondary{% endif %}">
                         <div class="card-header text-center">
                             {{ order.user }}
-                            {% if order.status == 'in_progress' %}
-                            <p>In Progress</p>
-                            {% endif %}
                         </div>
                         <div class="card-body">
                                 <!-- {% if project.created_by == user %}
@@ -27,7 +24,7 @@
                                 {% for item in order.items.all %}
                                     <div class="row">
                                         <div class="col-3">
-                                            <span class="bg-success rounded p-1">{{ item.quantity }} x</span>
+                                            <span class="{% if order.status == 'in_progress' %}bg-secondary text-light{% elif order.status == 'ready' %}bg-dark{% endif %} rounded p-1">{{ item.quantity }} x</span>
                                         </div>
                                         <div class="col-9">
                                             <span>{{ item.part.name }}</span>
@@ -35,7 +32,7 @@
                                     </div>
                                     <div class="row text-center pt-2">
                                         <div class="col-12">
-                                            <span class="bg-warning rounded p-1">{{ item.part.location }}</span>
+                                            <span class="{% if order.status == 'in_progress' %}bg-info{% elif order.status == 'ready' %}bg-dark{% endif %} rounded p-1">{{ item.part.location }}</span>
                                         </div>
                                     </div>
                                 {% endfor %}
@@ -44,8 +41,16 @@
                             {% endif %}
                         </div>
                         <div class="card-footer text-center">
-                            <small> {{ order.collection_datetime }}</small>
+                            <small> {{ order.collection_datetime|date:"D jS M @ H:m" }}</small>
                         </div>
+                        
+                        <form method="POST">
+                            {% csrf_token %}
+                            <input type="hidden" name="order_id" value="{{ order.id }}">
+                            <input type="hidden" name="new_status" value="{% if order.status == 'in_progress' %}ready{% elif order.status == 'ready' %}collected{% endif %}">
+                            <button class="btn btn-dark card-hover-button" type="submit" name="status">{% if order.status == 'in_progress' %}Ready for Collection{% elif order.status == 'ready' %}Collected{% endif %}</button>
+                        </form>
+                        
                     </div>
                 </div>
 

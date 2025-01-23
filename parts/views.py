@@ -83,5 +83,6 @@ class LowStockListView(ListView):
 
     def get_queryset(self):
         all_parts = Part.objects.all()
+        # Filter parts to only show those low in stock
         low_stock_parts = [part for part in all_parts if part.is_low_stock()]
         return low_stock_parts
