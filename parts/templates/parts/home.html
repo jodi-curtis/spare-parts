@@ -1,4 +1,103 @@
 {% extends "parts/base.html" %}
 {% block content %}
-    <h1>Parts Home</h1>
+    <div class="p-4 w-100 bg-dark text-light border rounded shadow">
+        <!--Orders split by status using bootstrap tabs-->
+        <h3 class="mb-4">My Orders</h3>
+        <ul class="nav nav-tabs" id="projectsTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="current-tab" data-bs-toggle="tab" data-bs-target="#current" type="button" role="tab" aria-controls="current" aria-selected="true">Current Orders<span class="badge rounded-pill bg-danger mx-2">{{ current_orders_count }}</span></button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="past-tab" data-bs-toggle="tab" data-bs-target="#past" type="button" role="tab" aria-controls="past" aria-selected="false">Past Orders<span class="badge rounded-pill bg-danger mx-2">{{ past_orders_count }}</span></button>
+            </li>
+        </ul>
+
+        <div class="tab-content p-3 bg-white text-dark border rounded" id="myHomeTabContent">
+            <div class="tab-pane fade show active" id="current" role="tabpanel" aria-labelledby="current-tab">
+                <div class="row row-cols-1 g-4">
+                    {% if current_orders %}
+                        {% for order in current_orders %}
+                            <div class="col">
+                                <div class="card h-100 text-dark bg-light">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-10">
+                                                {% if order.items.all %}
+                                                    {% for item in order.items.all %}
+                                                        <div class="row py-2">
+                                                            <div class="col-2">
+                                                                <span class="bg-secondary text-light rounded p-1">{{ item.quantity }} x</span>
+                                                            </div>
+                                                            <div class="col-10">
+                                                                <span>{{ item.part.name }}</span>
+                                                            </div>
+                                                        </div>
+                                                    {% endfor %}
+                                                {% else %}
+                                                    <p>No items in this order.</p>
+                                                {% endif %}
+                                            </div>
+                                            <div class="col-2">
+                                                <span>
+                                                    {% if order.status == 'in_progress' %}
+                                                        {{ order.collection_datetime|date:"D jS M @ H:m" }}
+                                                    {% elif order.status == 'ready' %}
+                                                        Ready!
+                                                    {% endif %}
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+            
+                        {% endfor %}
+                    
+                    {% else %}
+                        <p>You have no current orders..</p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="past" role="tabpanel" aria-labelledby="past-tab">
+                <div class="row row-cols-1 g-4">
+                    {% if past_orders %}
+                        {% for order in past_orders %}
+                            <div class="col">
+                                <div class="card h-100 text-dark bg-light">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-10">
+                                                {% if order.items.all %}
+                                                    {% for item in order.items.all %}
+                                                        <div class="row py-2">
+                                                            <div class="col-2">
+                                                                <span class="bg-secondary text-light rounded p-1">{{ item.quantity }} x</span>
+                                                            </div>
+                                                            <div class="col-10">
+                                                                <span>{{ item.part.name }}</span>
+                                                            </div>
+                                                        </div>
+                                                    {% endfor %}
+                                                {% else %}
+                                                    <p>No items in this order.</p>
+                                                {% endif %}
+                                            </div>
+                                            <div class="col-2">
+                                                <span>Collected!</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <p>You have no current orders..</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 {% endblock content %}

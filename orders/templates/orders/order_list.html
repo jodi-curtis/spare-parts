@@ -23,16 +23,16 @@
                             {% if order.items.all %}
                                 {% for item in order.items.all %}
                                     <div class="row">
-                                        <div class="col-3">
+                                        <div class="col-2">
                                             <span class="{% if order.status == 'in_progress' %}bg-secondary text-light{% elif order.status == 'ready' %}bg-dark{% endif %} rounded p-1">{{ item.quantity }} x</span>
                                         </div>
-                                        <div class="col-9">
+                                        <div class="col-10">
                                             <span>{{ item.part.name }}</span>
                                         </div>
                                     </div>
-                                    <div class="row text-center pt-2">
+                                    <div class="row text-center py-2">
                                         <div class="col-12">
-                                            <span class="{% if order.status == 'in_progress' %}bg-info{% elif order.status == 'ready' %}bg-dark{% endif %} rounded p-1">{{ item.part.location }}</span>
+                                            <span class="{% if order.status == 'in_progress' %}bg-info{% elif order.status == 'ready' %}bg-dark{% endif %} rounded p-1 d-block font-monospace">{{ item.part.location }}</span>
                                         </div>
                                     </div>
                                 {% endfor %}

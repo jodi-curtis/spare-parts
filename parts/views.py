@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from . models import Part
 from basket.models import Basket, BasketItem
+from orders.models import Order
 from django.views.generic import ListView, DetailView
 from django.db.models import Q
 from django.contrib import messages
@@ -10,8 +11,26 @@ from django.contrib import messages
 # Create your views here.
 @login_required
 def home(request):
+    # Create empty dictionaries to store past and current orders
+    past_orders = []
+    current_orders = []
+
+    # Get all orders for current user
+    orders = Order.objects.filter(user = request.user)
+
+    # Sort orders by status and add to relevent dictonary
+    for order in orders:
+        if order.status == 'collected':
+            past_orders.append(order)
+        else:
+            current_orders.append(order)
+
     context = {
-        'title': 'Home'
+        'title': 'Home',
+        'past_orders': past_orders,
+        'current_orders': current_orders,
+        'past_orders_count': len(past_orders), # Count number of past orders
+        'current_orders_count': len(current_orders) # Count number of current orders
     }
     return render(request, 'parts/home.html', context)
 
