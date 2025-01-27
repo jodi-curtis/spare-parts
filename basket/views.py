@@ -4,10 +4,12 @@ from . models import Basket, BasketItem
 from parts.models import Part
 from orders.models import Order, OrderItem
 from django.contrib import messages
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.contrib.auth.views import redirect_to_login
 
 
 # Create your views here.
-class BasketDetailView(DetailView):
+class BasketDetailView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
     model = Basket
     template_name = 'basket/basket.html'
     context_object_name = 'basket'
@@ -64,3 +66,14 @@ class BasketDetailView(DetailView):
             messages.success(request, f"Order placed.. keep track of your orders on the dashboard")
         # Redirect to page to refresh basket
         return redirect('basket-home')
+    
+    def test_func(self):
+        return self.request.user.profile.user_group == 'engineer'
+    
+    def handle_no_permission(self):
+        if self.request.user.is_authenticated:
+            messages.warning(self.request, "You do not have permission to access the Basket page")
+            return redirect('parts-home')
+        else:
+            messages.warning(self.request, "Login to access this page")
+            return redirect_to_login(self.request.get_full_path())

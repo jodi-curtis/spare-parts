@@ -8,6 +8,8 @@ from orders.models import Order
 from django.views.generic import ListView, DetailView
 from django.db.models import Q
 from django.contrib import messages
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.contrib.auth.views import redirect_to_login
 
 # Create your views here.
 @login_required
@@ -42,7 +44,7 @@ def home(request):
     }
     return render(request, 'parts/home.html', context)
 
-class PartListView(ListView):
+class PartListView(LoginRequiredMixin, ListView):
     model = Part
     context_object_name = 'parts'
 
@@ -103,7 +105,7 @@ class PartDetailView(DetailView):
         return redirect('part-detail', pk=current_part.pk)
     
 
-class LowStockListView(ListView):
+class LowStockListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
     model = Part
     context_object_name = 'parts'
     template_name = 'parts/low_stock.html'
@@ -113,3 +115,14 @@ class LowStockListView(ListView):
         # Filter parts to only show those low in stock
         low_stock_parts = [part for part in all_parts if part.is_low_stock()]
         return low_stock_parts
+    
+    def test_func(self):
+        return self.request.user.profile.user_group == 'store_manager'
+    
+    def handle_no_permission(self):
+        if self.request.user.is_authenticated:
+            messages.warning(self.request, "You do not have permission to access the Low Stock page")
+            return redirect('parts-home')
+        else:
+            messages.warning(self.request, "Login to access this page")
+            return redirect_to_login(self.request.get_full_path())

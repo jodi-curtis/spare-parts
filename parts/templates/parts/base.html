@@ -30,25 +30,35 @@
                 <ul class="navbar-nav">
                     {% if user.is_authenticated %}
                         <span class="navbar-text mx-2 fs-5">Hello, {{ user.username }} ( {{ user.profile.get_user_group_display  }})</span>
+                        
+
                         <li class="nav-item mx-3">
                             <a class="nav-link fs-5" href="{% url 'parts-home' %}">Dashboard</a>
                         </li>
 
-                        <li class="nav-item mx-3">
-                            <a class="nav-link fs-5" href="{% url 'order-home' %}">Orders</a>
-                        </li>
-                        
+                        {% if user.profile.user_group == 'store_manager' %}
+                            <li class="nav-item mx-3">
+                                <a class="nav-link fs-5" href="{% url 'order-home' %}">Orders</a>
+                            </li>
+                        {% endif %}
+
                         <li class="nav-item mx-3">
                             <a class="nav-link fs-5" href="{% url 'parts-list' %}">Parts</a>
                         </li>
 
-                        <li class="nav-item mx-3">
-                            <a class="nav-link fs-5" href="{% url 'low-stock' %}">Low Stock</a>
-                        </li>
+                        {% if user.profile.user_group == 'store_manager' %}
+                            <li class="nav-item mx-3">
+                                <a class="nav-link fs-5" href="{% url 'low-stock' %}">Low Stock</a>
+                            </li>
+                        {% endif %}
 
-                        <li class="nav-item mx-3">
-                            <a class="nav-link fs-5" href="{% url 'basket-home' %}"><i class="fa-solid fa-basket-shopping"></i></a>
-                        </li>
+
+                        {% if user.profile.user_group == 'engineer' %}
+                            <li class="nav-item mx-3">
+                                <a class="nav-link fs-5" href="{% url 'basket-home' %}"><i class="fa-solid fa-basket-shopping"></i></a>
+                            </li>
+                        {% endif %}
+
 
                         <form method="POST" action="{% url 'logout' %}" class="form-inline nav-item d-flex align-items-center">
                             {% csrf_token %}

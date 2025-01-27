@@ -16,7 +16,9 @@
         <thead>
             <tr>
                 <th>Part</th>
-                <th>Location</th>
+                {% if user.profile.user_group == 'store_manager' %}
+                    <th>Location</th>
+                {% endif %}
                 <th>Number in Stock</th>
             </tr>
         </thead>
@@ -26,7 +28,9 @@
                 {% for part in parts %}
                     <tr>
                         <td><a href="{% url 'part-detail' part.id %}">{{ part.code }} - {{ part.name }}</a></td>
-                        <td>{{ part.location }}</td>
+                        {% if user.profile.user_group == 'store_manager' %}
+                            <td>{{ part.location }}</td>
+                        {% endif %}
                         <td>{{ part.num_in_stock }}</td>
                     </tr>
                 {% endfor %}
