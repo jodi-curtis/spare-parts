@@ -1,8 +1,20 @@
 {% extends "parts/base.html" %}
 {% block content %}
+    <h3 class="my-4">Quick Search:</h3>
+    <div class="p-4 w-100 bg-dark text-light border rounded shadow">
+        <form method="get" class="mb-3">
+            <!--Search bar-->
+            <input type="text" name="searchVal" class="form-control" placeholder="Search by code or name" value="{{ search_value }}">
+            <!--Search button-->
+            <button type="submit" class="btn btn-primary mt-2"><i class="fa-solid fa-magnifying-glass"></i></button>
+            <!--Button to clear search-->
+            <a href="{% url 'parts-list' %}" class="btn btn-secondary mt-2">Clear</a>
+        </form>
+    </div>
+
+    <h3 class="my-4">My Orders:</h3>
     <div class="p-4 w-100 bg-dark text-light border rounded shadow">
         <!--Orders split by status using bootstrap tabs-->
-        <h3 class="mb-4">My Orders</h3>
         <ul class="nav nav-tabs" id="projectsTabs" role="tablist">
             <li class="nav-item" role="presentation">
                 <button class="nav-link active" id="current-tab" data-bs-toggle="tab" data-bs-target="#current" type="button" role="tab" aria-controls="current" aria-selected="true">Current Orders<span class="badge rounded-pill bg-danger mx-2">{{ current_orders_count }}</span></button>

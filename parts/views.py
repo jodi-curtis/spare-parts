@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.urls import reverse
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from . models import Part
@@ -11,6 +12,13 @@ from django.contrib import messages
 # Create your views here.
 @login_required
 def home(request):
+    # Get search value from quick search
+    search_value = request.GET.get('searchVal')
+    
+    # If search value is found pass into part list page to filter list of parts
+    if search_value:
+        return redirect(f"{reverse('parts-list')}?searchVal={search_value}")
+    
     # Create empty dictionaries to store past and current orders
     past_orders = []
     current_orders = []
