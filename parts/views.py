@@ -13,7 +13,18 @@ from django.contrib.auth.views import redirect_to_login
 
 # Create your views here.
 @login_required
+def login_success(request):
+    if request.user.profile.user_group == 'store_manager':
+        return redirect('order-home')
+    else:
+        return redirect('parts-home')
+    
+@login_required
 def home(request):
+    if request.user.profile.user_group == 'store_manager':
+        messages.warning(request, "You do not have permission to access the Engineers Dashboard")
+        return redirect('login-success')
+    
     # Get search value from quick search
     search_value = request.GET.get('searchVal')
     
@@ -63,7 +74,7 @@ class PartListView(LoginRequiredMixin, ListView):
         context['search_value'] = self.request.GET.get('searchVal', '')
         return context
     
-class PartDetailView(DetailView):
+class PartDetailView(LoginRequiredMixin, DetailView):
     model = Part
 
     def post(self, request, *args, **kwargs):
@@ -122,7 +133,7 @@ class LowStockListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
     def handle_no_permission(self):
         if self.request.user.is_authenticated:
             messages.warning(self.request, "You do not have permission to access the Low Stock page")
-            return redirect('parts-home')
+            return redirect('login-success')
         else:
             messages.warning(self.request, "Login to access this page")
             return redirect_to_login(self.request.get_full_path())

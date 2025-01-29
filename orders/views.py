@@ -2,13 +2,12 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .models import Order
 from django.views.generic import ListView
+from django.contrib import messages
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.contrib.auth.views import redirect_to_login
 
 # Create your views here.
-
-def home(request):
-    return HttpResponse('<h1>Orders Home</h1>')
-
-class OrderListView(ListView):
+class OrderListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
     model = Order
     context_object_name = 'orders'
 
@@ -30,3 +29,14 @@ class OrderListView(ListView):
             order.save()
             # Refresh page
             return redirect('order-home')
+        
+    def test_func(self):
+        return self.request.user.profile.user_group == 'store_manager'
+    
+    def handle_no_permission(self):
+        if self.request.user.is_authenticated:
+            messages.warning(self.request, "You do not have permission to access the Order Screen")
+            return redirect('login-success')
+        else:
+            messages.warning(self.request, "Login to access this page")
+            return redirect_to_login(self.request.get_full_path())

@@ -32,9 +32,11 @@
                         <span class="navbar-text mx-2 fs-5">Hello, {{ user.username }} ( {{ user.profile.get_user_group_display  }})</span>
                         
 
-                        <li class="nav-item mx-3">
-                            <a class="nav-link fs-5" href="{% url 'parts-home' %}">Dashboard</a>
-                        </li>
+                        {% if user.profile.user_group == 'engineer' %}
+                            <li class="nav-item mx-3">
+                                <a class="nav-link fs-5" href="{% url 'parts-home' %}">Dashboard</a>
+                            </li>
+                        {% endif %}
 
                         {% if user.profile.user_group == 'store_manager' %}
                             <li class="nav-item mx-3">

@@ -73,7 +73,7 @@ class BasketDetailView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
     def handle_no_permission(self):
         if self.request.user.is_authenticated:
             messages.warning(self.request, "You do not have permission to access the Basket page")
-            return redirect('parts-home')
+            return redirect('login-success')
         else:
             messages.warning(self.request, "Login to access this page")
             return redirect_to_login(self.request.get_full_path())
