@@ -2,52 +2,55 @@
 {% block content %}
 
     <!--Table showing part details-->
-    <table class="table">
+    <table class="table table-secondary mb-5 parts">
         <thead>
             <tr>
-                <th>Part Code</th>
-                <th>Part Name</th>
+                <th class="py-2">Part Code</th>
+                <th class="py-2">Part Name</th>
                 {% if user.profile.user_group == 'store_manager' %}
-                    <th>Location</th>
+                    <th class="py-2">Location</th>
                 {% endif %}
-                <th>In Stock</th>
+                <th class="py-2">In Stock</th>
             </tr>
         </thead>
         <tbody>
             <tr>
-                <td>{{part.code}}</td>
-                <td>{{ part.name }}</td>
+                <td class="py-3">{{part.code}}</td>
+                <td class="py-3">{{ part.name }}</td>
                 {% if user.profile.user_group == 'store_manager' %}
-                    <td>{{ part.location }}</td>
+                    <td class="py-3">{{ part.location }}</td>
                 {% endif %}
-                <td>{{ part.num_in_stock }}</td>
+                <td class="py-3">{{ part.num_in_stock }}</td>
             </tr>
         </tbody>
     </table>
 
     {% if user.profile.user_group == 'store_manager' %}
         <!--Form to receipt into stock-->
-        <form method="post">
+        <form method="post" class="p-4 border rounded bg-light">
             {% csrf_token %}
-            <div class="form-group d-flex align-items-center">
-                <button type="button" class="btn btn-secondary" id="minus-btn-receipt">-</button>
-                <input type="number" id="stock_input" name="receipt_quantity" class="form-control mx-2" value="0" readonly required>
-                <button type="button" class="btn btn-secondary" id="plus-btn-receipt">+</button>
+            <h3>Receipt in Stock</h3>
+            <div class="form-group d-flex justify-content-center align-items-center my-5">
+                <button type="button" class="btn btn-secondary p-3" id="minus-btn-receipt"><i class="fa-solid fa-minus fa-xl"></i></button>
+                <input type="number" id="stock_input" name="receipt_quantity" class="form-control text-center mx-4" value="0" readonly required style="max-width: 80px;">
+                <button type="button" class="btn btn-secondary p-3" id="plus-btn-receipt"><i class="fa-solid fa-plus fa-xl"></i></button>
             </div>
-            <button type="submit" class="btn btn-primary mt-2">Update Stock</button>
+            <button type="submit" class="btn btn-primary mt-5 mb-2 w-100 d-block mx-auto">Add to Stock</button>
         </form>
+        
     {% endif %}
 
     {% if user.profile.user_group == 'engineer' %}
         <!--Form to add to order-->
-        <form method="post">
+        <form method="post" class="p-4 border rounded bg-light">
             {% csrf_token %}
-            <div class="form-group d-flex align-items-center">
-                <button type="button" class="btn btn-secondary" id="minus-btn-order">-</button>
-                <input type="number" id="order_input" name="order_quantity" class="form-control mx-2" value="0" readonly required>
-                <button type="button" class="btn btn-secondary" id="plus-btn-order">+</button>
+            <h3>Order</h3>
+            <div class="form-group d-flex justify-content-center align-items-center my-5">
+                <button type="button" class="btn btn-secondary p-3" id="minus-btn-order"><i class="fa-solid fa-minus fa-xl"></i></button>
+                <input type="number" id="order_input" name="order_quantity" class="form-control text-center mx-4" value="0" readonly required style="max-width: 80px;">
+                <button type="button" class="btn btn-secondary p-3" id="plus-btn-order"><i class="fa-solid fa-plus fa-xl"></i></button>
             </div>
-            <button type="submit" class="btn btn-primary mt-2">Add to Order</button>
+            <button type="submit" class="btn btn-primary mt-5 mb-2 w-100 d-block mx-auto">Add to Order</button>
         </form>
     {% endif %}
 

@@ -1,65 +1,55 @@
 {% extends "parts/base.html" %}
 {% block content %}
-    <h1>Orders</h1>
-
-
-        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-            {% if orders %}
-                <!--If orders found, list details-->
-                {% for order in orders %}
-                <div class="col">
-                    <!-- <div class="card {% if project.is_overdue %}border-danger{% endif %} h-100"> -->
-                    <div class="card card-hover h-100 {% if order.status == 'in_progress' %}text-dark bg-light{% elif order.status == 'ready' %}text-light bg-secondary{% endif %}">
-                        <div class="card-header text-center">
-                            {{ order.user }}
-                        </div>
-                        <div class="card-body">
-                                <!-- {% if project.created_by == user %}
-                                    <span class="badge rounded-circle bg-success text-light" title="Created by you">
-                                        <i class="fas fa-xs fa-star"></i>
-                                    </span>
-                                {% endif %} -->
-
-                            {% if order.items.all %}
-                                {% for item in order.items.all %}
+    <h1 class="my-5">Orders</h1>
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 mb-5 myOrders">
+        {% if orders %}
+            <!--If orders found, list details-->
+            {% for order in orders %}
+            <div class="col">
+                <div class="card card-hover h-100 {% if order.status == 'in_progress' %}text-dark bg-light{% elif order.status == 'ready' %}text-light bg-secondary{% endif %}">
+                    <div class="card-header text-center">
+                        {{ order.user }}
+                    </div>
+                    <div class="card-body">
+                        {% if order.items.all %}
+                            {% for item in order.items.all %}
+                                <div class="py-2">
                                     <div class="row">
-                                        <div class="col-2">
-                                            <span class="{% if order.status == 'in_progress' %}bg-secondary text-light{% elif order.status == 'ready' %}bg-dark{% endif %} rounded p-1">{{ item.quantity }} x</span>
+                                        <div class="col-2 col-md-3">
+                                            <span class="p-2 {% if order.status == 'in_progress' %}bg-secondary text-light{% elif order.status == 'ready' %}bg-dark{% endif %} rounded p-1">{{ item.quantity }} x</span>
                                         </div>
-                                        <div class="col-10">
+                                        <div class="col-10 col-md-9">
                                             <span>{{ item.part.name }}</span>
                                         </div>
                                     </div>
-                                    <div class="row text-center py-2">
+                                    <div class="row text-center py-2 my-2">
                                         <div class="col-12">
                                             <span class="{% if order.status == 'in_progress' %}bg-info{% elif order.status == 'ready' %}bg-dark{% endif %} rounded p-1 d-block font-monospace">{{ item.part.location }}</span>
                                         </div>
                                     </div>
-                                {% endfor %}
-                            {% else %}
-                                <p>No items in this order.</p>
-                            {% endif %}
-                        </div>
-                        <div class="card-footer text-center">
-                            <small> {{ order.collection_datetime|date:"D jS M @ H:m" }}</small>
-                        </div>
-                        
-                        <form method="POST">
-                            {% csrf_token %}
-                            <input type="hidden" name="order_id" value="{{ order.id }}">
-                            <input type="hidden" name="new_status" value="{% if order.status == 'in_progress' %}ready{% elif order.status == 'ready' %}collected{% endif %}">
-                            <button class="btn btn-dark card-hover-button" type="submit" name="status">{% if order.status == 'in_progress' %}Ready for Collection{% elif order.status == 'ready' %}Collected{% endif %}</button>
-                        </form>
-                        
+                                </div>
+                            {% endfor %}
+                        {% else %}
+                            <p>No items in this order.</p>
+                        {% endif %}
                     </div>
+                    <div class="card-footer text-center">
+                        <small> {{ order.collection_datetime|date:"D jS M @ H:m" }}</small>
+                    </div>
+                    
+                    <form method="POST">
+                        {% csrf_token %}
+                        <input type="hidden" name="order_id" value="{{ order.id }}">
+                        <input type="hidden" name="new_status" value="{% if order.status == 'in_progress' %}ready{% elif order.status == 'ready' %}collected{% endif %}">
+                        <button class="btn btn-dark card-hover-button btnStatus py-3" type="submit" name="status">{% if order.status == 'in_progress' %}READY FOR COLLECTION{% elif order.status == 'ready' %}COLLECTED{% endif %}</button>
+                    </form>
                 </div>
-
-
-                {% endfor %}
-            {% else %}
-                <!--If no orders found, show not found message-->
-                <p>No orders found..</p>
-            {% endif %}
-        </div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <!--If no orders found, show not found message-->
+            <p>No orders found..</p>
+        {% endif %}
+    </div>
 
 {% endblock content %}

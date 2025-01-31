@@ -17,63 +17,63 @@
 </head>
 <body>
     <!--Menu-->
-    <nav class="navbar navbar-expand-lg navbar-light" id="menu">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-5" id="menu">
         <div class="container-fluid">
             <!--Link to home page-->
-            <a class="navbar-brand" href="{% url 'parts-home' %}">Home</a>
+            <a class="navbar-brand" href="{% url 'login-success' %}">Home</a>
             <!--Navbar toggle button for smaller screens-->
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <!--Navbar options-->
             <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
-                <ul class="navbar-nav">
+                <ul class="navbar-nav text-center">
                     {% if user.is_authenticated %}
-                        <span class="navbar-text mx-2 fs-5">Hello, {{ user.username }} ( {{ user.profile.get_user_group_display  }})</span>
+                        <span class="navbar-text mx-2">Hello, {{ user.username }} ( {{ user.profile.get_user_group_display  }})</span>
                         
 
                         {% if user.profile.user_group == 'engineer' %}
                             <li class="nav-item mx-3">
-                                <a class="nav-link fs-5" href="{% url 'parts-home' %}">Dashboard</a>
+                                <a class="nav-link {% if request.resolver_match.url_name == 'parts-home' %}active{% endif %}" href="{% url 'parts-home' %}">Dashboard</a>
                             </li>
                         {% endif %}
 
                         {% if user.profile.user_group == 'store_manager' %}
                             <li class="nav-item mx-3">
-                                <a class="nav-link fs-5" href="{% url 'order-home' %}">Orders</a>
+                                <a class="nav-link {% if request.resolver_match.url_name == 'order-home' %}active{% endif %}" href="{% url 'order-home' %}">Orders</a>
                             </li>
                         {% endif %}
 
                         <li class="nav-item mx-3">
-                            <a class="nav-link fs-5" href="{% url 'parts-list' %}">Parts</a>
+                            <a class="nav-link {% if request.resolver_match.url_name == 'parts-list' %}active{% endif %}" href="{% url 'parts-list' %}">Parts</a>
                         </li>
 
                         {% if user.profile.user_group == 'store_manager' %}
                             <li class="nav-item mx-3">
-                                <a class="nav-link fs-5" href="{% url 'low-stock' %}">Low Stock</a>
+                                <a class="nav-link {% if request.resolver_match.url_name == 'low-stock' %}active{% endif %}" href="{% url 'low-stock' %}">Low Stock</a>
                             </li>
                         {% endif %}
 
 
                         {% if user.profile.user_group == 'engineer' %}
                             <li class="nav-item mx-3">
-                                <a class="nav-link fs-5" href="{% url 'basket-home' %}"><i class="fa-solid fa-basket-shopping"></i></a>
+                                <a class="nav-link {% if request.resolver_match.url_name == 'basket-home' %}active{% endif %}" href="{% url 'basket-home' %}"><i class="fa-solid fa-basket-shopping"></i></a>
                             </li>
                         {% endif %}
 
 
                         <form method="POST" action="{% url 'logout' %}" class="form-inline nav-item d-flex align-items-center">
                             {% csrf_token %}
-                            <button type="submit" class="btn btn-logout nav-link btn-light text-dark mx-2">
-                                <i class="fa-solid fa-right-from-bracket"></i>
+                            <button type="submit" class="btn btn-logout nav-link btn-light text-dark mx-3 px-3">
+                                <i class="fa-solid fa-right-from-bracket fa-lg"></i>
                             </button>
                         </form>
                     {% else %}
                         <li class="nav-item mx-3">
-                            <a class="nav-link fs-5" href="{% url 'login' %}">Login</a>
+                            <a class="nav-link {% if request.resolver_match.url_name == 'login' %}active{% endif %}" href="{% url 'login' %}">Login</a>
                         </li>
                         <li class="nav-item mx-3">
-                            <a class="nav-link fs-5" href="{% url 'register' %}">Register</a>
+                            <a class="nav-link {% if request.resolver_match.url_name == 'register' %}active{% endif %}" href="{% url 'register' %}">Register</a>
                         </li>
                     {% endif %}
                 </ul>

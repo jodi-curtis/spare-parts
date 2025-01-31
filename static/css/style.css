@@ -23,3 +23,47 @@
 .card-hover:hover .card-hover-button {
     display: block;
 }
+
+.basket .part{
+    width: 70%;
+}
+
+.basket .quantity{
+    width: 20%;
+}
+
+.basket .delete{
+    width: 10%;
+}
+
+
+body{
+    font-size: 1em;
+}
+
+.btn{
+    font-size: 0.9em;
+}
+
+.input, .myOrders, .parts, .basket{
+    font-size: 0.8em;
+}
+
+.btnStatus{
+    width: 80%;
+    font-size: 2em;
+}
+
+@media (min-width: 600px){
+    .input, .myOrders, .parts, .basket{
+        font-size: 1em;
+    }
+
+    .btn{
+        font-size: 1em;
+    }
+}
+
+@media (min-width: 1100px) {
+    
+}

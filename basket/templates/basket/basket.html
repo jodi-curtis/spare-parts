@@ -1,22 +1,22 @@
 {% extends "parts/base.html" %}
 {% block content %}
-    <h1>Your Basket</h1>
+    <h1 class="my-5">Your Basket</h1>
 
     {% if basket.items.exists %}
-        <table class="table">
-            <thead>
+        <table class="table table-light align-middle basket">
+            <thead class="border-bottom border-dark border-2">
                 <tr>
-                    <th>Part</th>
-                    <th>Quantity</th>
-                    <th></th>
+                    <th class="part">Part</th>
+                    <th class="quantity">Quantity</th>
+                    <th class="delete"></th>
                 </tr>
             </thead>
             <tbody>
                 {% for item in basket.items.all %}
                 <tr>
-                    <td>{{ item.part.name }}</td>
-                    <td>{{ item.quantity }}</td>
-                    <td>
+                    <td class="py-3">{{ item.part.name }}</td>
+                    <td class="py-3">{{ item.quantity }}</td>
+                    <td class="py-3">
                         <form method="post">
                             {% csrf_token %}
                             <input type="hidden" name="remove_item_id" value="{{ item.id }}">
@@ -27,16 +27,29 @@
                 {% endfor %}
             </tbody>
         </table>
-        <form method="post" >
+
+        <form method="post">
             {% csrf_token %}
-            <label for="collection_datetime">Select Collection Date and Time:</label>
-            <input 
-                type="datetime-local" 
-                id="collection_datetime" 
-                name="collection_datetime" 
-                required>
-            <button type="submit" class="btn btn-primary">Submit Order</button>
+            <div class="form-group py-5">
+                <div class="row justify-content-end">
+                    <div class="col-md-4">
+                        <label for="collection_datetime" class="form-label">Collection Date and Time:</label>
+                        <input 
+                            type="datetime-local" 
+                            id="collection_datetime" 
+                            name="collection_datetime" 
+                            class="form-control input"
+                            required>
+                    </div>
+                </div>
+                <div class="row justify-content-end mt-3">
+                    <div class="col-md-4">
+                        <button type="submit" class="btn btn-primary w-100">Submit Order</button>
+                    </div>
+                </div>
+            </div>
         </form>
+                 
     {% else %}
         <p>Your basket is empty.</p>
     {% endif %}
