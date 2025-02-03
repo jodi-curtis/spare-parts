@@ -2,8 +2,8 @@
 {% block content %}
 
     <!--Table showing part details-->
-    <table class="table table-secondary mb-5 parts">
-        <thead>
+    <table class="table table-light mb-5 parts">
+        <thead class="table-dark">
             <tr>
                 <th class="py-2">Part Code</th>
                 <th class="py-2">Part Name</th>
@@ -29,13 +29,13 @@
         <!--Form to receipt into stock-->
         <form method="post" class="p-4 border rounded bg-light">
             {% csrf_token %}
-            <h3>Receipt in Stock</h3>
+            <h3>Receipt in Stock <i class="fa-solid fa-box-open"></i></h3>
             <div class="form-group d-flex justify-content-center align-items-center my-5">
-                <button type="button" class="btn btn-secondary p-3" id="minus-btn-receipt"><i class="fa-solid fa-minus fa-xl"></i></button>
+                <button type="button" class="btn btn-minus p-3" id="minus-btn-receipt"><i class="fa-solid fa-minus fa-xl"></i></button>
                 <input type="number" id="stock_input" name="receipt_quantity" class="form-control text-center mx-4" value="0" readonly required style="max-width: 80px;">
-                <button type="button" class="btn btn-secondary p-3" id="plus-btn-receipt"><i class="fa-solid fa-plus fa-xl"></i></button>
+                <button type="button" class="btn btn-plus p-3" id="plus-btn-receipt"><i class="fa-solid fa-plus fa-xl"></i></button>
             </div>
-            <button type="submit" class="btn btn-primary mt-5 mb-2 w-100 d-block mx-auto">Add to Stock</button>
+            <button type="submit" class="btn btn-light-bg mt-5 mb-2 w-100 d-block mx-auto">Add to Stock</button>
         </form>
         
     {% endif %}
@@ -44,13 +44,13 @@
         <!--Form to add to order-->
         <form method="post" class="p-4 border rounded bg-light">
             {% csrf_token %}
-            <h3>Order</h3>
+            <h3>Order <i class="fa-solid fa-cart-plus"></i></h3>
             <div class="form-group d-flex justify-content-center align-items-center my-5">
-                <button type="button" class="btn btn-secondary p-3" id="minus-btn-order"><i class="fa-solid fa-minus fa-xl"></i></button>
+                <button type="button" class="btn btn-minus p-3" id="minus-btn-order"><i class="fa-solid fa-minus fa-xl"></i></button>
                 <input type="number" id="order_input" name="order_quantity" class="form-control text-center mx-4" value="0" readonly required style="max-width: 80px;">
-                <button type="button" class="btn btn-secondary p-3" id="plus-btn-order"><i class="fa-solid fa-plus fa-xl"></i></button>
+                <button type="button" class="btn btn-plus p-3" id="plus-btn-order"><i class="fa-solid fa-plus fa-xl"></i></button>
             </div>
-            <button type="submit" class="btn btn-primary mt-5 mb-2 w-100 d-block mx-auto">Add to Order</button>
+            <button type="submit" class="btn btn-light-bg mt-5 mb-2 w-100 d-block mx-auto">Add to Order</button>
         </form>
     {% endif %}
 

@@ -1,3 +1,34 @@
+
+.card{
+    font-size: 1em;
+}
+.pending-location{
+    background-color: #6A6294;
+    color: #ffffff;
+}
+
+.pending-quantity{
+    background-color: #CBDCEB;
+    color: #000000;
+
+}
+
+.order-status-btn{
+    background-color: #133E87;
+    color: #ffffff;
+    font-weight: bold;
+}
+
+.order-status-btn:hover{
+    background-color: #608BC1;
+    color: #ffffff;
+}
+
+.order-status-btn:active{
+    background-color: #CBDCEB !important;
+    color: #000000;
+}
+
 .card-hover {
     position: relative;
     overflow: hidden;
@@ -36,13 +67,79 @@
     width: 10%;
 }
 
+/*Menu*/
+#menu{
+    background-color: #133E87;
+    color: #ffffff;
+}
+
+#logo{
+    height: 50px;
+}
+
+#emptybasket{
+    height: 150px;
+}
+
+
 
 body{
     font-size: 1em;
+    background-color: #CBDCEB;
 }
 
 .btn{
     font-size: 0.9em;
+}
+
+.btn-dark-bg{
+    background-color: #608BC1;
+    color: #CBDCEB;
+    border: 2px solid #CBDCEB;
+}
+
+.btn-dark-bg:hover{
+    background-color: #CBDCEB;
+    color: #608BC1;
+    border: 2px solid #CBDCEB;
+}
+
+.btn-dark-bg:active{
+    background-color: #608BC1 !important;
+    color: #CBDCEB !important;
+    border: 2px solid #CBDCEB !important;
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);
+}
+
+.btn-light-bg{
+    background-color: #133E87;
+    color: #ffffff;
+    border: 2px solid #133E87;   
+}
+
+.btn-light-bg:hover{
+    background-color: #608BC1;
+    color: #ffffff;
+    border: 2px solid #133E87;   
+}
+
+.btn-light-bg:active{
+    background-color: #133E87 !important;
+    color: #ffffff !important;
+    border: 2px solid #133E87 !important;
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);
+}
+
+.btn-minus, .btn-plus{
+    background-color: #608BC1;
+    color: #ffffff;  
+}
+
+.btn-minus:hover, .btn-plus:hover{
+    background-color: #133E87;
+    color: #ffffff; 
 }
 
 .input, .myOrders, .parts, .basket{
@@ -54,7 +151,23 @@ body{
     font-size: 2em;
 }
 
+.order-tab{
+    color: #608BC1;
+}
+
+.order-tab:hover{
+    color: #ffffff;
+}
+
+#projectsTabs .nav-link.active{
+    font-weight: bold;
+}
+
 @media (min-width: 600px){
+    #logo{
+        height:60px;
+    }
+
     .input, .myOrders, .parts, .basket{
         font-size: 1em;
     }
@@ -62,8 +175,24 @@ body{
     .btn{
         font-size: 1em;
     }
+
+    #emptybasket{
+        height: 200px;
+    }
+    .card{
+        font-size: 1.1em;
+    }
 }
 
 @media (min-width: 1100px) {
-    
+    .navbar{
+        font-size: 1.25em;
+    }
+    #logo{
+        height: 70px;
+    }
+
+    #emptybasket{
+        height: 250px;
+    }
 }

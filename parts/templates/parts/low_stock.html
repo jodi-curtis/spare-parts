@@ -1,6 +1,6 @@
 {% extends "parts/base.html" %}
 {% block content %}
-    <h1 class="my-5">Low Stock</h1>
+    <h1 class="my-5">Low Stock <i class="fa-solid fa-circle-exclamation"></i></h1>
 
     <!--Table showing list of parts-->
     <table class="table table-light parts">
@@ -26,7 +26,7 @@
             {% else %}
                 <!--If no parts found, show not found message-->
                 <tr>
-                    <td colspan="3">No parts found...</td>
+                    <td colspan="4">No parts found...</td>
                 </tr>
             {% endif %}
         </tbody>

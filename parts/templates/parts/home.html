@@ -7,7 +7,7 @@
                 <!--Search bar-->
                 <input type="text" name="searchVal" class="form-control me-4 input" placeholder="Search for part by code or name" value="{{ search_value }}">
                 <!--Search button-->
-                <button type="submit" class="btn btn-primary me-2"><i class="fa-solid fa-magnifying-glass fa-xl"></i></button>
+                <button type="submit" class="btn btn-dark-bg me-2"><i class="fa-solid fa-magnifying-glass fa-xl"></i></button>
             </div>
         </form>
     </div>
@@ -17,10 +17,10 @@
         <!--Orders split by status using bootstrap tabs-->
         <ul class="nav nav-tabs" id="projectsTabs" role="tablist">
             <li class="nav-item" role="presentation">
-                <button class="nav-link active" id="current-tab" data-bs-toggle="tab" data-bs-target="#current" type="button" role="tab" aria-controls="current" aria-selected="true">Current Orders<span class="badge rounded-pill bg-danger mx-2">{{ current_orders_count }}</span></button>
+                <button class="nav-link active order-tab" id="current-tab" data-bs-toggle="tab" data-bs-target="#current" type="button" role="tab" aria-controls="current" aria-selected="true">Current Orders<span class="badge rounded-pill bg-danger mx-2">{{ current_orders_count }}</span></button>
             </li>
             <li class="nav-item" role="presentation">
-                <button class="nav-link" id="past-tab" data-bs-toggle="tab" data-bs-target="#past" type="button" role="tab" aria-controls="past" aria-selected="false">Past Orders<span class="badge rounded-pill bg-danger mx-2">{{ past_orders_count }}</span></button>
+                <button class="nav-link order-tab" id="past-tab" data-bs-toggle="tab" data-bs-target="#past" type="button" role="tab" aria-controls="past" aria-selected="false">Past Orders<span class="badge rounded-pill bg-danger mx-2">{{ past_orders_count }}</span></button>
             </li>
         </ul>
 

@@ -17,10 +17,12 @@
 </head>
 <body>
     <!--Menu-->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-5" id="menu">
+    <nav class="navbar navbar-expand-lg navbar-dark mb-5" id="menu">
         <div class="container-fluid">
             <!--Link to home page-->
-            <a class="navbar-brand" href="{% url 'login-success' %}">Home</a>
+            <a class="navbar-brand" href="{% url 'login-success' %}">
+                <img src="{% static 'images/logo.png' %}" alt="Logo" id="logo">
+            </a>
             <!--Navbar toggle button for smaller screens-->
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -29,9 +31,6 @@
             <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
                 <ul class="navbar-nav text-center">
                     {% if user.is_authenticated %}
-                        <span class="navbar-text mx-2">Hello, {{ user.username }} ( {{ user.profile.get_user_group_display  }})</span>
-                        
-
                         {% if user.profile.user_group == 'engineer' %}
                             <li class="nav-item mx-3">
                                 <a class="nav-link {% if request.resolver_match.url_name == 'parts-home' %}active{% endif %}" href="{% url 'parts-home' %}">Dashboard</a>

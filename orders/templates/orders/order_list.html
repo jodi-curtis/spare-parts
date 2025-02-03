@@ -6,7 +6,7 @@
             <!--If orders found, list details-->
             {% for order in orders %}
             <div class="col">
-                <div class="card card-hover h-100 {% if order.status == 'in_progress' %}text-dark bg-light{% elif order.status == 'ready' %}text-light bg-secondary{% endif %}">
+                <div class="card card-hover h-100 {% if order.status == 'in_progress' %}text-dark bg-light pending-card {% elif order.status == 'ready' %}text-light bg-secondary{% endif %}">
                     <div class="card-header text-center">
                         {{ order.user }}
                     </div>
@@ -16,7 +16,7 @@
                                 <div class="py-2">
                                     <div class="row">
                                         <div class="col-2 col-md-3">
-                                            <span class="p-2 {% if order.status == 'in_progress' %}bg-secondary text-light{% elif order.status == 'ready' %}bg-dark{% endif %} rounded p-1">{{ item.quantity }} x</span>
+                                            <span class="p-2 {% if order.status == 'in_progress' %}pending-quantity{% elif order.status == 'ready' %}bg-dark{% endif %} rounded p-1">{{ item.quantity }} x</span>
                                         </div>
                                         <div class="col-10 col-md-9">
                                             <span>{{ item.part.name }}</span>
@@ -24,7 +24,7 @@
                                     </div>
                                     <div class="row text-center py-2 my-2">
                                         <div class="col-12">
-                                            <span class="{% if order.status == 'in_progress' %}bg-info{% elif order.status == 'ready' %}bg-dark{% endif %} rounded p-1 d-block font-monospace">{{ item.part.location }}</span>
+                                            <span class="{% if order.status == 'in_progress' %}pending-location{% elif order.status == 'ready' %}bg-dark{% endif %} rounded p-1 d-block font-monospace">{{ item.part.location }}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -41,7 +41,7 @@
                         {% csrf_token %}
                         <input type="hidden" name="order_id" value="{{ order.id }}">
                         <input type="hidden" name="new_status" value="{% if order.status == 'in_progress' %}ready{% elif order.status == 'ready' %}collected{% endif %}">
-                        <button class="btn btn-dark card-hover-button btnStatus py-3" type="submit" name="status">{% if order.status == 'in_progress' %}READY FOR COLLECTION{% elif order.status == 'ready' %}COLLECTED{% endif %}</button>
+                        <button class="btn order-status-btn card-hover-button btnStatus py-3" type="submit" name="status">{% if order.status == 'in_progress' %}READY FOR COLLECTION{% elif order.status == 'ready' %}COLLECTED{% endif %}</button>
                     </form>
                 </div>
             </div>

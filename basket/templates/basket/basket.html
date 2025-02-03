@@ -44,14 +44,18 @@
                 </div>
                 <div class="row justify-content-end mt-3">
                     <div class="col-md-4">
-                        <button type="submit" class="btn btn-primary w-100">Submit Order</button>
+                        <button type="submit" class="btn btn-light-bg w-100">Submit Order</button>
                     </div>
                 </div>
             </div>
         </form>
                  
     {% else %}
-        <p>Your basket is empty.</p>
+       <div class="text-center">
+            {% load static %}
+            <img src="{% static 'images/emptybasket.png' %}" alt="Empty Basket" id="emptybasket">
+            <h4 class="mt-4">Your basket is empty...</h4>
+        </div>
     {% endif %}
 
 {% endblock %}
