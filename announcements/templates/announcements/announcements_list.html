@@ -7,6 +7,13 @@
             <div class="card my-3 p-3 border">
                 <h4>{{ announcement.message }}</h4>
                 <p>Posted by: {{ announcement.posted_by.username }}</p>
+                <form method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="announcement_id" value="{{ announcement.id }}">
+                    <button type="submit" class="btn {% if announcement.visible %}btn-danger{% else %}btn-success{% endif %} btn-sm">
+                        {% if announcement.visible %}Hide{% else %}Show{% endif %}
+                    </button>
+                </form>
             </div>
         {% endfor %}
     {% else %}

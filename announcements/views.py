@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import Announcements
 from django.views.generic import ListView, CreateView
 from django.contrib import messages
@@ -15,6 +15,19 @@ class AnnouncementsListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
     def get_queryset(self):
         return super().get_queryset()
 
+    def post(self, request, *args, **kwargs):
+        announcement_id = request.POST.get("announcement_id")
+        announcement = get_object_or_404(Announcements, pk=announcement_id)
+        announcement.visible = not announcement.visible
+        announcement.save()
+
+        if announcement.visible:
+            messages.success(request, "Announcement is now visible.")
+        else:
+            messages.success(request, "Announcement has been hidden.")
+
+        return redirect('announcements')
+    
     def test_func(self):
         return self.request.user.profile.user_group == 'store_manager'
     
