@@ -51,6 +51,9 @@
                             <li class="nav-item mx-3">
                                 <a class="nav-link {% if request.resolver_match.url_name == 'low-stock' %}active{% endif %}" href="{% url 'low-stock' %}">Low Stock <span class="badge rounded-pill bg-danger mx-2">{{ low_stock_count }}</span></a>
                             </li>
+                            <li class="nav-item mx-3">
+                                <a class="nav-link {% if request.resolver_match.url_name == 'announcements' %}active{% endif %}" href="{% url 'announcements' %}">Announcements</a>
+                            </li>
                         {% endif %}
 
 

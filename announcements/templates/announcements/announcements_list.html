@@ -1,0 +1,15 @@
+{% extends "parts/base.html" %}
+{% block content %}
+    <h1 class="my-5">Announcements</h1>
+    <a class="btn btn-light-bg rounded" href="{% url 'announcement-create' %}">New Announcement <i class="fas fa-plus ms-2   "></i></a>
+    {% if announcements %}
+        {% for announcement in announcements %}
+            <div class="card my-3 p-3 border">
+                <h4>{{ announcement.message }}</h4>
+                <p>Posted by: {{ announcement.posted_by.username }}</p>
+            </div>
+        {% endfor %}
+    {% else %}
+        <h3>No announcements</h3>
+    {% endif %}
+{% endblock content %}

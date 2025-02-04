@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'users.apps.UsersConfig',
     'basket.apps.BasketConfig',
     'orders.apps.OrdersConfig',
+    'announcements.apps.AnnouncementsConfig',
     'crispy_forms',
     'crispy_bootstrap5',
     'django.contrib.admin',

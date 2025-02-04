@@ -11,5 +11,5 @@ urlpatterns = [
     path('parts/', include('parts.urls')),
     path('basket/', include('basket.urls')),
     path('orders/', include('orders.urls')),
-
+    path('announcements/', include('announcements.urls')),
 ]
