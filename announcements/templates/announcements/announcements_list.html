@@ -14,6 +14,8 @@
                         {% if announcement.visible %}Hide{% else %}Show{% endif %}
                     </button>
                 </form>
+                <a class="btn btn-primary btn-sm" href="{% url 'announcement-update' announcement.id %}">Edit</a>
+                <a href="{% url 'announcement-delete' announcement.id %}" class="btn btn-danger">Delete</a>
             </div>
         {% endfor %}
     {% else %}

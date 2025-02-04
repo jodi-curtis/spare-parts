@@ -1,5 +1,6 @@
 from django.db import models
 from users.models import User
+from django.urls import reverse
 
 # Create your models here.
 class Announcements(models.Model):
@@ -10,3 +11,6 @@ class Announcements(models.Model):
 
     def __str__(self):
         return self.message
+    
+    def get_absolute_url(self):
+        return reverse('announcements')

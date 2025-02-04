@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Announcements
-from django.views.generic import ListView, CreateView
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.views import redirect_to_login
@@ -58,6 +58,48 @@ class AnnouncementsCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateVie
         if self.request.user.is_authenticated:
             messages.warning(self.request, "You do not have permission to access the Announcements section")
             return redirect('login-success')
+        else:
+            messages.warning(self.request, "Login to access this page")
+            return redirect_to_login(self.request.get_full_path())
+
+class AnnouncementsUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    model = Announcements
+    fields=['message']
+
+    def form_valid(self, form):
+        form.instance.posted_by = self.request.user
+        return super().form_valid(form)
+    
+    #Only allow user who created announcment to update it
+    def test_func(self):
+        announcement = self.get_object()
+        if self.request.user == announcement.posted_by:
+            return True
+        return False
+    
+    def handle_no_permission(self):
+        if self.request.user.is_authenticated:
+            messages.warning(self.request, "You do not have permission to edit this announcement")
+            return redirect('announcements')
+        else:
+            messages.warning(self.request, "Login to access this page")
+            return redirect_to_login(self.request.get_full_path())
+        
+class AnnouncementDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model = Announcements
+    success_url = reverse_lazy('announcements')
+    
+    #Only allow user who created announcment to delete it
+    def test_func(self):
+        announcement = self.get_object()
+        if self.request.user == announcement.posted_by:
+            return True
+        return False
+    
+    def handle_no_permission(self):
+        if self.request.user.is_authenticated:
+            messages.warning(self.request, "You do not have permission to delete this announcement")
+            return redirect('announcements')
         else:
             messages.warning(self.request, "Login to access this page")
             return redirect_to_login(self.request.get_full_path())
