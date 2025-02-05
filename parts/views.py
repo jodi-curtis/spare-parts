@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 from . models import Part
 from basket.models import Basket, BasketItem
 from orders.models import Order
+from announcements.models import Announcements
 from django.views.generic import ListView, DetailView
 from django.db.models import Q
 from django.contrib import messages
@@ -25,6 +26,8 @@ def home(request):
         messages.warning(request, "You do not have permission to access the Engineers Dashboard")
         return redirect('login-success')
     
+    announcements = Announcements.objects.filter(visible = True)
+
     # Get search value from quick search
     search_value = request.GET.get('searchVal')
     
@@ -48,6 +51,7 @@ def home(request):
 
     context = {
         'title': 'Home',
+        'announcements': announcements,
         'past_orders': past_orders,
         'current_orders': current_orders,
         'past_orders_count': len(past_orders), # Count number of past orders

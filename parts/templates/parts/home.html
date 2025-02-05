@@ -1,5 +1,25 @@
 {% extends "parts/base.html" %}
 {% block content %}
+ 
+    {% if announcements %}
+        <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner text-center">
+                {% for announcement in announcements %}
+                {% if forloop.first %}
+                    <div class="carousel-item active">
+                {% else %}
+                    <div class="carousel-item">
+                {% endif %}
+                    <blockquote class="blockquote">
+                        <p>{{ announcement.message }}</p>
+                    </blockquote>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    {% endif %}
+
+
     <h3 class="my-4">Quick Search:</h3>
     <div class="px-4 py-5 w-100 bg-dark text-light border rounded shadow">
         <form method="get">
