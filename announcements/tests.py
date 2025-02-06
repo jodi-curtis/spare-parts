@@ -10,7 +10,7 @@ class AnnouncementModelTest(TestCase):
         self.user = User.objects.create_user(username="testuser", password="testpassword")
         self.announcement = Announcements.objects.create(posted_by=self.user, message="This is an announcement", visible=True)
 
-    def test_part_creation(self):
+    def test_announcement_creation(self):
         self.assertEqual(self.announcement.posted_by.username, "testuser")
         self.assertEqual(self.announcement.message, "This is an announcement")
         self.assertEqual(self.announcement.visible, True)

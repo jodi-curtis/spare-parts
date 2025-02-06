@@ -20,7 +20,7 @@ class BasketItemModelTest(TestCase):
         self.part = Part.objects.create(code="ABC123", name="Test Part", num_in_stock=10, low_stock_warning=2, location="AA-BB-11")
         self.basketitem = BasketItem.objects.create(basket=self.basket, part=self.part, quantity=1)
     
-    def test_basket_creation(self):
+    def test_basketitem_creation(self):
         self.assertEqual(self.basketitem.basket, self.basket)
         self.assertEqual(self.basketitem.part, self.part)
         self.assertEqual(self.basketitem.quantity, 1)

@@ -24,7 +24,7 @@ class OrderItemModelTest(TestCase):
         self.part = Part.objects.create(code="ABC123", name="Test Part", num_in_stock=10, low_stock_warning=2, location="AA-BB-11")
         self.orderitem = OrderItem.objects.create(order=self.order, part=self.part, quantity=1)
     
-    def test_basket_creation(self):
+    def test_orderitem_creation(self):
         self.assertEqual(self.orderitem.order, self.order)
         self.assertEqual(self.orderitem.part, self.part)
         self.assertEqual(self.orderitem.quantity, 1)
