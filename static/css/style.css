@@ -77,11 +77,9 @@
     height: 50px;
 }
 
-#emptybasket{
+#emptybasket, #engineerimg{
     height: 150px;
 }
-
-
 
 body{
     font-size: 1em;
@@ -184,7 +182,7 @@ body{
     color: #ffffff !important;
 }
 
-.btn:active{
+.btn:not(.order-status-btn):active{
     box-shadow: 0 5px #666;
     transform: translateY(4px);
 }
@@ -202,7 +200,7 @@ body{
         font-size: 1em;
     }
 
-    #emptybasket{
+    #emptybasket, #engineerimg{
         height: 200px;
     }
     .card{
@@ -218,7 +216,7 @@ body{
         height: 70px;
     }
 
-    #emptybasket{
+    #emptybasket, #engineerimg{
         height: 250px;
     }
 }
