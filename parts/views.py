@@ -73,7 +73,7 @@ class PartListView(LoginRequiredMixin, ListView):
         # If search value exists, filter parts where code or name contains search value
         if search_value:
             queryset = queryset.filter(Q(code__icontains=search_value) | Q(name__icontains=search_value))
-        return queryset
+        return queryset[:50]
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
