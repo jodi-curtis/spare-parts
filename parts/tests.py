@@ -103,3 +103,29 @@ class PartViewTest(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, 'Test Part3')
         self.assertTemplateUsed(response, 'parts/low_stock.html')
+
+    # Test creating part
+    def test_part_create_view(self):
+        self.client.login(username='store_manager', password='testpassword')
+        response = self.client.get(reverse('part-create'))
+        self.assertEqual(response.status_code, 200)
+        response = self.client.post(reverse('part-create'), {'code': '111', 'name':'TestP1', 'num_in_stock':4, 'low_stock_warning':2, 'location':'AA-BB-CC'})
+        self.assertRedirects(response, reverse('parts-list'))
+        self.assertEqual(Part.objects.count(), 4)
+
+    # Test updating part
+    def test_part_update_view(self):
+        self.client.login(username='store_manager', password='testpassword')
+        response = self.client.get(reverse('part-update', args=[self.part1.id]))
+        self.assertEqual(response.status_code, 200)
+        response = self.client.post(reverse('part-update', args=[self.part1.id]),{'code': self.part1.code,'name': self.part1.name,'num_in_stock': self.part1.num_in_stock,'low_stock_warning': 3,'location': self.part1.location})
+        self.part1.refresh_from_db()
+        self.assertEqual(self.part1.low_stock_warning, 3)
+        self.assertRedirects(response, reverse('part-detail', args=[self.part1.id]))
+    
+    # Test deleting part
+    def test_part_delete_view(self):
+        self.client.login(username='store_manager', password='testpassword')
+        response = self.client.post(reverse('part-delete', args=[self.part1.id]))
+        self.assertEqual(Part.objects.count(), 2)
+        self.assertRedirects(response, reverse('parts-list'))
