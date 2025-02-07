@@ -16,8 +16,8 @@
             {% if parts %}
                 <!--If parts found, list details-->
                 {% for part in parts %}
-                    <tr class="table-danger text-danger">
-                        <td><a href="{% url 'part-detail' part.id %}">{{ part.code }}</a></td>
+                    <tr data-href="{% url 'part-detail' part.id %}" class="table-danger text-danger part-detail-ls-link">
+                        <td>{{ part.code }}</td>
                         <td>{{ part.name }}</td>
                         <td>{{ part.location }}</td>
                         <td class="text-center">{{ part.num_in_stock }}</td>
@@ -31,4 +31,13 @@
             {% endif %}
         </tbody>
     </table>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            document.querySelectorAll(".part-detail-ls-link").forEach(row => {
+                row.addEventListener("click", function() {
+                    window.location = this.getAttribute("data-href");
+                });
+            });
+        });
+    </script>
 {% endblock content %}
