@@ -63,6 +63,7 @@ def home(request):
 class PartListView(LoginRequiredMixin, ListView):
     model = Part
     context_object_name = 'parts'
+    ordering = ['code']
     paginate_by = 15
 
     def get_queryset(self):
