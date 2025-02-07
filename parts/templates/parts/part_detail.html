@@ -11,6 +11,9 @@
                     <th class="py-2">Location</th>
                 {% endif %}
                 <th class="py-2">In Stock</th>
+                {% if user.profile.user_group == 'store_manager' %}
+                    <th class="py-2"></th>
+                {% endif %}
             </tr>
         </thead>
         <tbody>
@@ -21,6 +24,12 @@
                     <td class="py-3">{{ part.location }}</td>
                 {% endif %}
                 <td class="py-3">{{ part.num_in_stock }}</td>
+                {% if user.profile.user_group == 'store_manager' %}
+                <td class="py-3 text-nowrap" style="width: 1%;">
+                    <a class="btn btn-primary btn-sm" href="{% url 'part-update' part.id %}">Edit</a>
+                    <a href="{% url 'part-delete' part.id %}" class="btn btn-danger btn-sm">Delete</a>
+                </td>
+                {% endif %}
             </tr>
         </tbody>
     </table>

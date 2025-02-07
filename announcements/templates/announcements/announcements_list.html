@@ -15,7 +15,7 @@
                     </button>
                 </form>
                 <a class="btn btn-primary btn-sm" href="{% url 'announcement-update' announcement.id %}">Edit</a>
-                <a href="{% url 'announcement-delete' announcement.id %}" class="btn btn-danger">Delete</a>
+                <a href="{% url 'announcement-delete' announcement.id %}" class="btn btn-sm btn-danger">Delete</a>
             </div>
         {% endfor %}
     {% else %}

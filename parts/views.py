@@ -6,11 +6,12 @@ from . models import Part
 from basket.models import Basket, BasketItem
 from orders.models import Order
 from announcements.models import Announcements
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.db.models import Q
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.views import redirect_to_login
+from django.urls import reverse_lazy
 
 # Create your views here.
 @login_required
@@ -121,6 +122,63 @@ class PartDetailView(LoginRequiredMixin, DetailView):
         return redirect('part-detail', pk=current_part.pk)
     
 
+class PartCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
+    model = Part
+    fields=['code', 'name', 'num_in_stock', 'low_stock_warning', 'location']
+
+    def get_success_url(self):
+        messages.success(self.request, "New Part added successfully!")
+        return reverse_lazy('parts-list')
+    
+    def test_func(self):
+        return self.request.user.profile.user_group == 'store_manager'
+    
+    def handle_no_permission(self):
+        if self.request.user.is_authenticated:
+            messages.warning(self.request, "You do not have permission to add a new part")
+            return redirect('login-success')
+        else:
+            messages.warning(self.request, "Login to access this page")
+            return redirect_to_login(self.request.get_full_path())
+        
+class PartUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    model = Part
+    fields=['code', 'name', 'low_stock_warning', 'location']
+
+
+    def get_success_url(self):
+        messages.success(self.request, "Part details updated successfully!")
+        return reverse('part-detail', kwargs={'pk': self.object.pk})
+    
+    def test_func(self):
+        return self.request.user.profile.user_group == 'store_manager'
+    
+    def handle_no_permission(self):
+        if self.request.user.is_authenticated:
+            messages.warning(self.request, "You do not have permission to update a parts details")
+            return redirect('login-success')
+        else:
+            messages.warning(self.request, "Login to access this page")
+            return redirect_to_login(self.request.get_full_path())
+        
+class PartDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model = Part
+
+    def get_success_url(self):
+        messages.success(self.request, "Part deleted")
+        return reverse_lazy('parts-list')
+    
+    def test_func(self):
+        return self.request.user.profile.user_group == 'store_manager'
+    
+    def handle_no_permission(self):
+        if self.request.user.is_authenticated:
+            messages.warning(self.request, "You do not have permission to delete a part")
+            return redirect('login-success')
+        else:
+            messages.warning(self.request, "Login to access this page")
+            return redirect_to_login(self.request.get_full_path())
+        
 class LowStockListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
     model = Part
     context_object_name = 'parts'
