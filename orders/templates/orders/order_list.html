@@ -1,8 +1,8 @@
 {% extends "parts/base.html" %}
 {% block content %}
     <h1 class="my-5">Orders</h1>
-    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 mb-5 myOrders">
-        {% if orders %}
+    {% if orders %}
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 mb-5 myOrders">
             <!--If orders found, list details-->
             {% for order in orders %}
             <div class="col">
@@ -46,10 +46,14 @@
                 </div>
             </div>
             {% endfor %}
-        {% else %}
-            <!--If no orders found, show not found message-->
-            <p>No orders found..</p>
-        {% endif %}
-    </div>
+        </div>
+    {% else %}
+        <!--If no orders found, show not found message-->
+        <div class="text-center mb-5">
+            {% load static %}
+            <img src="{% static 'images/noorders.png' %}" alt="No Orders" id="emptybasket">
+            <h4 class="mt-4">No orders at this time...</h4>
+        </div>
+    {% endif %}
 
 {% endblock content %}
