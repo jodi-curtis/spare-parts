@@ -33,10 +33,10 @@
         </thead>
         <tbody>
             {% if parts %}
-                <!--If parts found, list details-->
+            <!--If parts found, list details-->
                 {% for part in parts %}
-                    <tr>
-                        <td><a href="{% url 'part-detail' part.id %}">{{ part.code }}</a></td>
+                    <tr data-href="{% url 'part-detail' part.id %}" class="part-detail-link">
+                        <td>{{ part.code }}</td>
                         <td>{{ part.name }}</td>
                         {% if user.profile.user_group == 'store_manager' %}
                             <td>{{ part.location }}</td>
@@ -45,13 +45,14 @@
                     </tr>
                 {% endfor %}
             {% else %}
-                <!--If no parts found, show not found message-->
+            <!--If no parts found, show not found message-->
                 <tr>
                     <td colspan="3">No parts found...</td>
                 </tr>
             {% endif %}
         </tbody>
     </table>
+    
 
 
     <nav aria-label="Parts pagination">
@@ -87,4 +88,14 @@
             {% endif %}
         </ul>
     </nav>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            document.querySelectorAll(".part-detail-link").forEach(row => {
+                row.addEventListener("click", function() {
+                    window.location = this.getAttribute("data-href");
+                });
+            });
+        });
+    </script>
 {% endblock content %}
