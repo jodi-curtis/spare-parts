@@ -1,10 +1,17 @@
 {% extends "parts/base.html" %}
 {% load crispy_forms_tags %}
 {% block content %}
+    <div class="content-section mx-auto pb-5" style="width: 80%;">
         <form method="POST">
             {% csrf_token %}
             <fieldset class="form-group">
-                <legend class="border-bottom mb-4">Announcement</legend>
+                <legend class="border-bottom border-light border-2 mb-4 pb-2">
+                    {% if object.id %}
+                        Edit Announcement
+                    {% else %}
+                        New Announcement
+                    {% endif %}
+                </legend>
                 {{ form|crispy }}
             </fieldset>
             <div class="form-group">
@@ -12,4 +19,5 @@
                 <a href="{% url 'announcements' %}" class="btn btn-secondary">Cancel</a>
             </div>
         </form>
+    </div>
 {% endblock content %}

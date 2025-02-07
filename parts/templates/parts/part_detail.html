@@ -36,7 +36,7 @@
 
     {% if user.profile.user_group == 'store_manager' %}
         <!--Form to receipt into stock-->
-        <form method="post" class="p-4 border rounded bg-light">
+        <form method="post" class="p-4 border rounded bg-light mb-5">
             {% csrf_token %}
             <h3>Receipt in Stock <i class="fa-solid fa-box-open"></i></h3>
             <div class="form-group d-flex justify-content-center align-items-center my-5">
@@ -51,7 +51,7 @@
 
     {% if user.profile.user_group == 'engineer' %}
         <!--Form to add to order-->
-        <form method="post" class="p-4 border rounded bg-light">
+        <form method="post" class="p-4 border rounded bg-light mb-5">
             {% csrf_token %}
             <h3>Order <i class="fa-solid fa-cart-plus"></i></h3>
             <div class="form-group d-flex justify-content-center align-items-center my-5">

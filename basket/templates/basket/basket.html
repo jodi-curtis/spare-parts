@@ -28,7 +28,7 @@
             </tbody>
         </table>
 
-        <form method="post">
+        <form method="post" class="mb-5">
             {% csrf_token %}
             <div class="form-group py-5">
                 <div class="row justify-content-end">
@@ -51,7 +51,7 @@
         </form>
                  
     {% else %}
-       <div class="text-center">
+       <div class="text-center mb-5">
             {% load static %}
             <img src="{% static 'images/emptybasket.png' %}" alt="Empty Basket" id="emptybasket">
             <h4 class="mt-4">Your basket is empty...</h4>

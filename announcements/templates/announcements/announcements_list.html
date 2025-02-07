@@ -9,7 +9,7 @@
     {% for announcement in announcements %}
     <div class="card my-3 p-3 border d-flex flex-row justify-content-between align-items-start">
         <div>
-            <h4>{{ announcement.message }}</h4>
+            <h4 class="fw-light">{{ announcement.message }}</h4>
             <p>Posted by: {{ announcement.posted_by.username }}</p>
         </div>
         <div class="d-flex flex-column">

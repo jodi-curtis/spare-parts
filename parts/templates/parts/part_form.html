@@ -1,10 +1,17 @@
 {% extends "parts/base.html" %}
 {% load crispy_forms_tags %}
 {% block content %}
+    <div class="content-section mx-auto pb-5" style="width: 80%;">
         <form method="POST">
             {% csrf_token %}
             <fieldset class="form-group">
-                <legend class="border-bottom mb-4">Part</legend>
+                <legend class="border-bottom border-light border-2 mb-4 pb-2">
+                    {% if object.id %}
+                        Edit Part details
+                    {% else %}
+                        Create new Part
+                    {% endif %}
+                </legend>
                 {{ form|crispy }}
             </fieldset>
             <div class="form-group">
@@ -16,4 +23,5 @@
                 {% endif %}
             </div>
         </form>
+    </div>
 {% endblock content %}
