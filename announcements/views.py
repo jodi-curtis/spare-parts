@@ -10,22 +10,28 @@ from django.urls import reverse_lazy
 class AnnouncementsListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
     model = Announcements
     context_object_name = 'announcements'
+    #Order anouncements by timestamp descending
     ordering = ['-timestamp']
 
     def get_queryset(self):
         return super().get_queryset()
 
     def post(self, request, *args, **kwargs):
+        #Get id of announcement
         announcement_id = request.POST.get("announcement_id")
+        #Get announcement where id is selected 
         announcement = get_object_or_404(Announcements, pk=announcement_id)
+        #Update visible status to the oposite of what it already is
         announcement.visible = not announcement.visible
         announcement.save()
 
+        #Set success messages
         if announcement.visible:
             messages.success(request, "Announcement is now visible.")
         else:
             messages.success(request, "Announcement has been hidden.")
 
+        #Redirect back to announcments page
         return redirect('announcements')
     
     def test_func(self):
@@ -42,6 +48,7 @@ class AnnouncementsListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
 
 class AnnouncementsCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     model = Announcements
+    #Announcment form should allow setting of message
     fields=['message']
 
     def form_valid(self, form):
@@ -64,6 +71,7 @@ class AnnouncementsCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateVie
 
 class AnnouncementsUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Announcements
+    #Announcment form should allow updating of message
     fields=['message']
 
     def form_valid(self, form):

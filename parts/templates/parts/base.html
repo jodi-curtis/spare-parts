@@ -33,6 +33,7 @@
             <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
                 <ul class="navbar-nav text-center">
                     {% if user.is_authenticated %}
+                        <!--Hide menu options based on user group-->
                         {% if user.profile.user_group == 'engineer' %}
                             <li class="nav-item mx-3">
                                 <a class="nav-link {% if request.resolver_match.url_name == 'parts-home' %}active{% endif %}" href="{% url 'parts-home' %}">Dashboard</a>

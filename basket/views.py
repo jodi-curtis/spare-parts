@@ -22,20 +22,20 @@ class BasketDetailView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
     def post(self, request, *args, **kwargs):
         basket = self.get_object()
 
-        # Handle remove action
+        #Remove action
         if 'remove_item_id' in request.POST:
-            # Get item id
+            #Get item id
             item_id = request.POST.get('remove_item_id')
-            # Get item from users basket
+            #Get basket item
             item = BasketItem.objects.get(id=item_id, basket=basket)
             
-            # Get quantity of parts which were in basket 
+            #Get quantity of parts which were in basket 
             part_qty = item.quantity
 
-            # Delete Item from users basket
+            #Delete Item from users basket
             item.delete()
 
-            # Update part to add quantity back into stock 
+            #Update part to add quantity back into stock 
             part = Part.objects.get(id=item.part.id)
             part.num_in_stock += part_qty
             part.save()
@@ -43,16 +43,16 @@ class BasketDetailView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
             messages.success(request, f"{item.part.name} removed from basket")
 
         if 'collection_datetime' in request.POST:
-            # Get collection date and time set
+            #Get collection date and time set
             collection = request.POST.get('collection_datetime')
 
-            # Create Order
+            #Create Order
             order = Order.objects.create(
                 user=request.user,
                 collection_datetime = collection
             )
 
-            # Add items from basket to order
+            #Add items from basket to order
             for basket_item in basket.items.all():
                 OrderItem.objects.create(
                     order=order,
@@ -60,11 +60,11 @@ class BasketDetailView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
                     quantity=basket_item.quantity
                 )
 
-            # Remove items from user basket
+            #Remove items from user basket
             basket.items.all().delete()
 
             messages.success(request, f"Order placed.. keep track of your orders on the dashboard")
-        # Redirect to page to refresh basket
+        #Redirect to page to refresh basket
         return redirect('basket-home')
     
     def test_func(self):

@@ -30,13 +30,14 @@ class AnnouncementViewTest(TestCase):
 
         self.announcement = Announcements.objects.create(message="Test Announcement", posted_by=self.store_manager, visible=True)
 
+    #Test list view loads
     def test_announcements_list_view(self):
         self.client.login(username='store_manager', password='testpassword')
         response = self.client.get(reverse('announcements'))
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "Test Announcement")
 
-
+    #Test can create announcement
     def test_announcement_create_view(self):
         self.client.login(username='store_manager', password='testpassword')
         response = self.client.get(reverse('announcement-create'))
@@ -45,6 +46,7 @@ class AnnouncementViewTest(TestCase):
         self.assertRedirects(response, reverse('announcements'))
         self.assertEqual(Announcements.objects.count(), 2)
 
+    #Test can update announcement
     def test_announcement_update_view(self):
         self.client.login(username='store_manager', password='testpassword')
         response = self.client.get(reverse('announcement-update', args=[self.announcement.id]))
@@ -54,12 +56,14 @@ class AnnouncementViewTest(TestCase):
         self.assertEqual(self.announcement.message, 'Updated message')
         self.assertRedirects(response, reverse('announcements'))
 
+    #Test can delete annoucement
     def test_announcement_delete_view(self):
         self.client.login(username='store_manager', password='testpassword')
         response = self.client.post(reverse('announcement-delete', args=[self.announcement.id]))
         self.assertEqual(Announcements.objects.count(), 0)
         self.assertRedirects(response, reverse('announcements'))
 
+    # Test can updae visible status of announcement
     def test_announcement_post_toggle(self):
         self.client.login(username='store_manager', password='testpassword')
         self.assertTrue(self.announcement.visible)

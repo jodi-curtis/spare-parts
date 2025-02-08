@@ -37,6 +37,7 @@
                         <small> {{ order.collection_datetime|date:"D jS M @ H:m" }}</small>
                     </div>
                     
+                    <!--Button to update status of order-->
                     <form method="POST">
                         {% csrf_token %}
                         <input type="hidden" name="order_id" value="{{ order.id }}">

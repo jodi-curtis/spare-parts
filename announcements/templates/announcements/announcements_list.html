@@ -2,30 +2,34 @@
 {% block content %}
     <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center my-5">
         <h1>Announcements <i class="fa-solid fa-bullhorn"></i></h1>
+        <!--Create new announcement button-->
         <a class="btn btn-light-bg rounded-pill mt-2 mt-md-0" href="{% url 'announcement-create' %}">New Announcement <i class="fas fa-plus ms-2"></i></a>
     </div>
     
     {% if announcements %}
-    {% for announcement in announcements %}
-    <div class="card my-3 p-3 border d-flex flex-row justify-content-between align-items-start">
-        <div>
-            <h4 class="fw-light">{{ announcement.message }}</h4>
-            <p>Posted by: {{ announcement.posted_by.username }}</p>
+        <!--For each announcement show card containing details-->
+        {% for announcement in announcements %}
+        <div class="card my-3 p-3 border d-flex flex-row justify-content-between align-items-start">
+            <div>
+                <h4 class="fw-light">{{ announcement.message }}</h4>
+                <p>Posted by: {{ announcement.posted_by.username }}</p>
+            </div>
+            <div class="d-flex flex-column">
+                <!--Form to update visible status of announcement-->
+                <form method="POST" class="mb-2">
+                    {% csrf_token %}
+                    <input type="hidden" name="announcement_id" value="{{ announcement.id }}">
+                    <button type="submit" class="btn {% if announcement.visible %}btn-hide{% else %}btn-show{% endif %} btn-sm">
+                        {% if announcement.visible %}Hide{% else %}Show{% endif %}
+                    </button>
+                </form>
+                <!--Edit button-->
+                <a class="btn btn-light-bg btn-sm mb-2" href="{% url 'announcement-update' announcement.id %}">Edit</a>
+                <!--Delete button-->
+                <a href="{% url 'announcement-delete' announcement.id %}" class="btn btn-sm btn-danger">Delete</a>
+            </div>
         </div>
-        <div class="d-flex flex-column">
-            <form method="POST" class="mb-2">
-                {% csrf_token %}
-                <input type="hidden" name="announcement_id" value="{{ announcement.id }}">
-                <button type="submit" class="btn {% if announcement.visible %}btn-hide{% else %}btn-show{% endif %} btn-sm">
-                    {% if announcement.visible %}Hide{% else %}Show{% endif %}
-                </button>
-            </form>
-            <a class="btn btn-light-bg btn-sm mb-2" href="{% url 'announcement-update' announcement.id %}">Edit</a>
-            <a href="{% url 'announcement-delete' announcement.id %}" class="btn btn-sm btn-danger">Delete</a>
-        </div>
-    </div>
-{% endfor %}
-
+        {% endfor %}
     {% else %}
         <h3>No announcements</h3>
     {% endif %}

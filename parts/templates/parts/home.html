@@ -1,6 +1,7 @@
 {% extends "parts/base.html" %}
 {% block content %}
  
+    <!--Welcome message and image-->
     <div class="container">
         <div class="row align-items-center text-center text-md-start">
             {% load static %}
@@ -16,6 +17,7 @@
     </div>
 
 
+    <!--If announcements have been set, show them in a rotating carosel-->
     {% if announcements %}
         <h3 class="my-4">Announcements <i class="fa-solid fa-bullhorn"></i></h3>
         <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
