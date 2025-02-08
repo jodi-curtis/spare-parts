@@ -13,7 +13,7 @@ class OrderListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
 
     def get_queryset(self):
         # Filter orders to exclude those which have been collected
-        return Order.objects.exclude(status='collected')
+        return Order.objects.exclude(status='collected').order_by('collection_datetime')
 
     def post(self, request, *args, **kwargs):
         if 'new_status' in request.POST:

@@ -41,7 +41,7 @@ def home(request):
     current_orders = []
 
     # Get all orders for current user
-    orders = Order.objects.filter(user = request.user)
+    orders = Order.objects.filter(user = request.user).order_by('collection_datetime')
 
     # Sort orders by status and add to relevent dictonary
     for order in orders:
