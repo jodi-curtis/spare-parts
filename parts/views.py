@@ -12,7 +12,7 @@ from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.views import redirect_to_login
 from django.urls import reverse_lazy
-
+#THIS IS A NEW COMMENT
 # Create your views here.
 @login_required
 def login_success(request):
